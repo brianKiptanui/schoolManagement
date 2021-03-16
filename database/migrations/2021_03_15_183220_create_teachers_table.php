@@ -17,8 +17,10 @@ class CreateTeachersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
-            $table->integer('pwd');
-            $table->integer('teacher_id');
+            $table->string('pwd');
+            $table->string('subject');
+            $table->string('role');
+            $table->string('tsc_no');
             $table->timestamps();
         });
     }

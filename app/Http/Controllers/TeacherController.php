@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Teacher;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class TeacherController extends Controller
 {
@@ -13,7 +15,11 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        //
+        $teachers = Teacher::all();
+
+        return response([
+            'data' => $teachers->toArray()
+        ]);
     }
 
     /**
@@ -34,7 +40,29 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:30',
+            'email' => 'required|email',
+            'pwd' => 'required',
+            'subject' => 'required',
+            'role' => 'required',
+            'tsc_no' => 'required'
+        ]);
+
+        $teacher = new Teacher;
+
+        $teacher->name = $request->name;
+        $teacher->email = $request->email;
+        $teacher->pwd = $request->pwd;
+        $teacher->subject = $request->subject;
+        $teacher->role = $request->role;
+        $teacher->tsc_no = $request->tsc_no;
+        $teacher->save();
+
+        return response([
+            'success' => true,
+            'data' => $teacher->toArray()
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -45,7 +73,10 @@ class TeacherController extends Controller
      */
     public function show($id)
     {
-        //
+        $teacher = Teacher::find($id);
+        return response([
+            'data' => $teacher->toArray()
+        ]);
     }
 
     /**
@@ -68,7 +99,27 @@ class TeacherController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $teacher = Teacher::find($request->id);
+
+        if(!$teacher){
+            return response()->json([
+                'success' => false,
+                'data' => 'teacher$teacher with not found'
+            ]);
+        }
+         $teacherUpdate = $teacher->fill($request->all())->save();
+
+         if($teacherUpdate){
+            return response()->json([
+                'success' => true,
+                'data' => 'teacher$teacher details updated successfully!'
+            ]);
+         }else{
+            return response()->json([
+                'success' => false,
+                'data' => 'teacher$teacher details not updated!'
+            ]);
+         }
     }
 
     /**
@@ -79,6 +130,10 @@ class TeacherController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $teacher = Teacher::find($id);
+
+        $teacher->delete();
+
+        return response( null , Response::HTTP_NO_CONTENT);
     }
 }

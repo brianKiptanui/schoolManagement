@@ -17,8 +17,8 @@ class CreateStudentsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
-            $table->integer('pwd');
-            $table->integer('student_id');
+            $table->string('class');
+            $table->string('admission_no');
             $table->timestamps();
         });
     }

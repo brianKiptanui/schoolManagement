@@ -13,14 +13,12 @@ class CreateAttendancesTable extends Migration
      */
     public function up()
     {
-        Schema::create('attendances', function (Blueprint $table) {
+        Schema::connection('mysql2')->create('attendances', function (Blueprint $table) {
             $table->id();
-            $table->integer('student_id');
-            $table->integer('teacher_id');
+            $table->string('student_name');
+            $table->string('admission_no');
             $table->string('attendance_status');
             $table->string('day');
-            $table->integer('lesson_id');
-            $table->integer('subject_id');
             $table->timestamps();
         });
     }
