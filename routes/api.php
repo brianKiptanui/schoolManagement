@@ -62,7 +62,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
                 Route::post('lists', 'AttendanceController@listCreated');
                 Route::post('attendance', 'AttendanceController@attendanceList');
 
-                //ClassRoom
+                //Class Room
                 Route::post('lessons', 'ClassroomController@createLesson');
                 Route::post('subjects', 'ClassroomController@createSubject');
 
