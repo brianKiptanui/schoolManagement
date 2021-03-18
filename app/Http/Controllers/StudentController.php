@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\StudentResource as StudentResource;
-use App\Http\Resources\Students\StudentCollection;
+use App\Http\Requests\StudentRequest;
+use App\Http\Resources\StudentResource;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
 use App\Models\Student;
@@ -17,10 +17,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::all();
-        return response([
-            'data' => $students->toArray()
-        ]);
+        return StudentResource::collection(Student::all());
     }
 
     /**
@@ -39,14 +36,9 @@ class StudentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StudentRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|max:30',
-            'email' => 'required|email',
-            'class' => 'required',
-            'admission_no' => 'required'
-        ]);
+
 
         $student = new Student;
 
@@ -57,8 +49,7 @@ class StudentController extends Controller
         $student->save();
 
         return response([
-            'success' => true,
-            'data' => $student->toArray()
+            'data' => new StudentResource($student)
         ], Response::HTTP_CREATED);
     }
 
@@ -68,13 +59,9 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show(Student $student)
     {
-        $student = Student::find($request->id);
-
-        return response([
-            'data' => $student->toArray()
-        ]);
+        return new StudentResource($student);
     }
 
     /**
@@ -95,7 +82,7 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StudentRequest $request, $id)
     {
         $student = Student::find($request->id);
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TeacherRequest;
+use App\Http\Resources\TeacherResource;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,11 +17,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teachers = Teacher::all();
-
-        return response([
-            'data' => $teachers->toArray()
-        ]);
+        return TeacherResource::collection(Teacher::all());
     }
 
     /**
@@ -38,16 +36,9 @@ class TeacherController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TeacherRequest $request)
     {
-        $this->validate($request, [
-            'name' => 'required|max:30',
-            'email' => 'required|email',
-            'pwd' => 'required',
-            'subject' => 'required',
-            'role' => 'required',
-            'tsc_no' => 'required'
-        ]);
+
 
         $teacher = new Teacher;
 
@@ -60,8 +51,7 @@ class TeacherController extends Controller
         $teacher->save();
 
         return response([
-            'success' => true,
-            'data' => $teacher->toArray()
+            'data' => new TeacherResource($teacher)
         ], Response::HTTP_CREATED);
     }
 
@@ -71,12 +61,9 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(TeacherRequest $teacher)
     {
-        $teacher = Teacher::find($id);
-        return response([
-            'data' => $teacher->toArray()
-        ]);
+        return new TeacherResource($teacher);
     }
 
     /**
@@ -104,15 +91,14 @@ class TeacherController extends Controller
         if(!$teacher){
             return response()->json([
                 'success' => false,
-                'data' => 'teacher$teacher with not found'
+                'data' => 'teacher with not found'
             ]);
         }
          $teacherUpdate = $teacher->fill($request->all())->save();
 
          if($teacherUpdate){
             return response()->json([
-                'success' => true,
-                'data' => 'teacher$teacher details updated successfully!'
+                'data' => new TeacherResource($teacher)
             ]);
          }else{
             return response()->json([

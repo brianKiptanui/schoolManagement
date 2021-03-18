@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateLessonRequest;
+use App\Http\Requests\CreateSubjectRequest;
 use App\Models\Lesson;
 use App\Models\Subject;
 use Illuminate\Http\Request;
@@ -9,13 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ClassroomController extends Controller
 {
-    public function createLesson(Request $request)
+    public function createLesson(CreateLessonRequest $request)
     {
-        $this->validate($request, [
-            'teacher_name' => 'required|max:30',
-            'class_name' => 'required',
-            'subject' => 'required',
-        ]);
+
 
         $lesson = new Lesson;
 
@@ -40,15 +38,9 @@ class ClassroomController extends Controller
         ]);
     }
 
-    public function createSubject(Request $request)
+    public function createSubject(CreateSubjectRequest $request)
     {
-        $this->validate($request, [
-            'teacher_name' => 'required|max:30',
-            's_name' => 'required'
-        ]);
-
         $lesson = new Lesson;
-
         $lesson->teacher_name = $request->teacher_name;
         $lesson->s_name = $request->s_name;
 

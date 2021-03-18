@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Students;
+namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class StudentCollection extends ResourceCollection
+class TeacherCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -14,11 +14,13 @@ class StudentCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return [
+         return [
             'name' => $this->name,
             'email' => $this->email,
-            'admission_no' => $this->admission_no,
-            'class' => $this->class,
+            'pwd' => $this->pwd,
+            'subject' => $this->subject,
+            'role' => $this->role,
+            'tsc_no' => $this->tsc_no,
         ];
     }
 }
