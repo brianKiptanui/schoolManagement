@@ -48,6 +48,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
             Route::get('logout', 'Auth\AuthController@logout');
             Route::get('user', 'Auth\AuthController@user');
 
+                //Roles and Permission
+                Route::put('roles/{id}', 'RolesController@update');
+                Route::delete('roles/{id}', 'RolesController@destroy');
+                Route::get('roles', 'RolesController@index');
+                Route::post('roles', 'RolesController@store');
+                Route::get('roles/{id}', 'RolesController@show');
+
                 //Teacher
                 Route::post('teachers', 'TeacherController@store');
                 Route::put('teachers/{id}', 'TeacherController@update');
@@ -65,7 +72,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
                 //Class Room
                 Route::post('lessons', 'ClassroomController@createLesson');
                 Route::post('subjects', 'ClassroomController@createSubject');
-
    });
 
 
