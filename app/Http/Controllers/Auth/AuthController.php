@@ -7,24 +7,20 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\AuthRequest;
+
 
 class AuthController extends Controller
 {
 
-    public function register(Request $request)
+    public function register(AuthRequest $request)
     {
-           $request->validate([
-                  'name' => 'required|string',
-                  'email' => 'required|string|email|unique:users',
-                  'password' => 'required|string'
-           ]);
-
            $user = new User;
            $user->name = $request->name;
            $user->email = $request->email;
            $user->password = bcrypt($request->password);
 
-           
+
            $user->save();
 
            return response()->json([
@@ -32,12 +28,8 @@ class AuthController extends Controller
            ], 201);
     }
 
-        public function login(Request $request) {
+        public function login(AuthRequest $request) {
 
-            $request->validate([
-                 'email' => 'required|string|email',
-                 'password' => 'required|string'
-               ]);
             $credentials = request(['email', 'password']);
 
          if(!Auth::attempt($credentials))

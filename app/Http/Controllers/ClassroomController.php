@@ -6,7 +6,6 @@ use App\Http\Requests\CreateLessonRequest;
 use App\Http\Requests\CreateSubjectRequest;
 use App\Models\Lesson;
 use App\Models\Subject;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Gate;
 

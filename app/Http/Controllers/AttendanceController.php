@@ -6,6 +6,8 @@ use App\Models\Attendance;
 use Illuminate\Http\Request;
 use App\Models\Classlist;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\AttendanceRequest;
+use App\Http\Requests\ListRequest;
 
 class AttendanceController extends Controller
 {
@@ -17,14 +19,8 @@ class AttendanceController extends Controller
         ]);
     }
 
-    public function listCreated(Request $request)
+    public function listCreated(ListRequest $request)
     {
-        $this->validate($request, [
-            'class_name' => 'required|max:30',
-            'student_name' => 'required',
-            'admission_no' => 'required',
-        ]);
-
         $list = new Classlist;
 
         $list->class_name = $request->class_name;
@@ -39,14 +35,8 @@ class AttendanceController extends Controller
         ], Response::HTTP_CREATED);
     }
 
-    public function attendanceList(Request $request)
+    public function attendanceList(AttendanceRequest $request)
     {
-        $this->validate($request, [
-            'student_name' => 'required',
-            'admission_no' => 'required',
-            'attendance_status' => 'required',
-            'day' => 'required',
-        ]);
 
         $attendanceList = new Attendance;
 
