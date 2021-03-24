@@ -17,12 +17,14 @@ class AuthController extends Controller
                   'name' => 'required|string',
                   'email' => 'required|string|email|unique:users',
                   'password' => 'required|string'
-           ]); 
+           ]);
 
            $user = new User;
            $user->name = $request->name;
            $user->email = $request->email;
            $user->password = bcrypt($request->password);
+
+           
            $user->save();
 
            return response()->json([

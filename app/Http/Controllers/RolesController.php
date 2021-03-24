@@ -39,7 +39,6 @@ class RolesController extends Controller
         $role = new Role;
         $role->name = $request->name;
         $role->save();
-
         $listOfPermissions = explode(',', $request->roles_permissions);
 
 

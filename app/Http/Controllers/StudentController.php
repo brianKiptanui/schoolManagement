@@ -7,6 +7,8 @@ use App\Http\Resources\StudentResource;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
 use App\Models\Student;
+use Illuminate\Support\Facades\Gate;
+
 
 class StudentController extends Controller
 {
@@ -17,6 +19,10 @@ class StudentController extends Controller
      */
     public function index()
     {
+        if (! Gate::allows('show-student')) {
+            abort(403);
+        }
+
         return StudentResource::collection(Student::all());
     }
 
@@ -39,6 +45,9 @@ class StudentController extends Controller
     public function store(StudentRequest $request)
     {
 
+        if (! Gate::allows('store-student')) {
+            abort(403);
+        }
 
         $student = new Student;
 
@@ -61,6 +70,10 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
+        if (! Gate::allows('show-student')) {
+            abort(403);
+        }
+
         return new StudentResource($student);
     }
 
@@ -84,6 +97,10 @@ class StudentController extends Controller
      */
     public function update(StudentRequest $request, $id)
     {
+        if (! Gate::allows('update-student')) {
+            abort(403);
+        }
+
         $student = Student::find($request->id);
 
         if(!$student){
@@ -115,6 +132,9 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
+        if (! Gate::allows('destroy-student')) {
+            abort(403);
+        }
         $student = Student::find($id);
 
         $student->delete();

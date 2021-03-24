@@ -54,7 +54,7 @@ class AttendanceController extends Controller
         $attendanceList -> admission_no = $request->admission_no;
         $attendanceList -> attendance_status = $request->attendance_status;
         $attendanceList -> day = $request->day;
-       // $attendanceList = json_decode($request->attendance_status, true);
+       // $attendanceList = json_decode($request->attendance_status, true;
 
         $attendanceList->save();
 

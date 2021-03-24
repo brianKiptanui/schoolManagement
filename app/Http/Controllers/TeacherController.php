@@ -7,6 +7,7 @@ use App\Http\Resources\TeacherResource;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Gate;
 
 class TeacherController extends Controller
 {
@@ -17,6 +18,10 @@ class TeacherController extends Controller
      */
     public function index()
     {
+        if (! Gate::allows('show-teacher')) {
+            abort(403);
+        }
+
         return TeacherResource::collection(Teacher::all());
     }
 
@@ -39,6 +44,9 @@ class TeacherController extends Controller
     public function store(TeacherRequest $request)
     {
 
+        if (! Gate::allows('store-teacher')) {
+            abort(403);
+        }
 
         $teacher = new Teacher;
 
@@ -63,6 +71,10 @@ class TeacherController extends Controller
      */
     public function show(TeacherRequest $teacher)
     {
+        if (! Gate::allows('show-teacher')) {
+            abort(403);
+        }
+
         return new TeacherResource($teacher);
     }
 
@@ -86,6 +98,10 @@ class TeacherController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (! Gate::allows('update-teacher')) {
+            abort(403);
+        }
+
         $teacher = Teacher::find($request->id);
 
         if(!$teacher){
@@ -116,6 +132,10 @@ class TeacherController extends Controller
      */
     public function destroy($id)
     {
+        if (! Gate::allows('destroy-teacher')) {
+            abort(403);
+        }
+
         $teacher = Teacher::find($id);
 
         $teacher->delete();
