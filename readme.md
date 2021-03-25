@@ -4,7 +4,7 @@ This **RESTful API** is developed for educational institution  built on Laravel 
 
 There are 3 types of user accounts. They include:
  
-Administrator (Admin)
+- Administrator (Admin)
 - Teacher
 - Student
 
@@ -34,7 +34,7 @@ composer update/install
 ```
 composer install
 ```
-## How to setting 
+## How to set 
 
 Go into .env file and change Database credentials.
 
@@ -48,7 +48,7 @@ php artisan passport:install
 ```
 ## **FUNCTIONS** 
 
-**-- Administrators (Super Admin & Admin)**
+**-- Administrator (Admin)**
 
 - Manage students and teachers Attendance
 - Create, Edit and manage all user accounts & profiles
