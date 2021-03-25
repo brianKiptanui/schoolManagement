@@ -13,6 +13,7 @@ There are 3 types of user accounts. They include:
         Laravel 7 Requirements https://laravel.com/docs/7.x
         PHP >= 5.6.4
         MySQL >= 5.7
+        Postman App
 
 
 ## Install
